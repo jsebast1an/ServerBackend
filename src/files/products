@@ -1,0 +1,14 @@
+[
+  {
+    "name": "shoe",
+    "price": 122,
+    "thumbnail": "http://localhost:8080/img/1646526414732-$.jpg",
+    "id": 1
+  },
+  {
+    "name": "hat\n",
+    "price": 100,
+    "thumbnail": "http://localhost:8080/img/1646526913646-$.jpg",
+    "id": 2
+  }
+]
