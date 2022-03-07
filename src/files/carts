@@ -1,6 +1,8 @@
 [
   {
-    "products": [],
+    "products": [
+      2
+    ],
     "timestamp": 2022,
     "id": 1
   },

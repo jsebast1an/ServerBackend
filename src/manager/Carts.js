@@ -48,26 +48,39 @@ class CartManager {
             }
         }
     }
-    addProduct = async (id, productId) => {
-        if(!id) return {status:"error", message: "Id field missing"}
+    addProduct = async (cartId, productId) => {
+        if(!cartId) return {status:"error", message: "cartId field missing"}
+        if(!productId) return {status:"error", message: "productId field missing"}
         if (fs.existsSync(pathCarts)) {
             try {
-                //encontramos el carrito
-                let data = await fs.promises.readFile(pathCarts, 'utf-8') 
-                let carts = JSON.parse(data);
-                let cart = carts.find( cart => cart.id === parseInt(id) )
+                //array carritos
+                const carts = JSON.parse(await fs.promises.readFile(pathCarts, 'utf-8'));
+
                 //ahora tenemos que encontrar el producto
-                let data2 = await fs.promises.readFile(pathProducts, 'utf-8')
-                let products = JSON.parse(data2);
-                let product = products.find( product => product.id == parseInt(productId))
-                if (cart) {
-                    newCart = cart.products.push(product.id)
-                    await fs.promises.writeFile(pathCarts, JSON.stringify([...carts, newCart]))
-                    return {status:"success", payload: newCart}
-                }
-                else return {status: null, message: "cart not found"}
+                const products = JSON.parse(await fs.promises.readFile(pathProducts, 'utf-8'));
+                const idExistProd = products.some( product => product.id === productId );
+
+                let currentCart = [];
+
+                //Map del array Cart para acceder al cart respectivo(cartId) y pushear el productId
+                if (idExistProd) {
+                    const cartsUpdated = carts.map( cart => {
+                        if (cart.id === cartId) {
+                            cart.products.push(productId)
+                            currentCart = cart
+                            return cart
+
+                        } else return cart
+                    } )
+
+                    await fs.promises.writeFile(pathCarts, JSON.stringify(cartsUpdated, null, 2))
+
+                    return {status:"success", message:`Product '${productId}' added`, payload: currentCart}
+                    
+                } else return {status: "error", message: `productId: ${productId} do not exist`}         
+                
             } catch (error) {
-                return {status: error}
+                return {status: error, message:"add product error"}
             }   
         } else { return {status: "empty", payload: []} }
     }
@@ -84,16 +97,40 @@ class CartManager {
         }
     }
 
-    updateProduct = async(id, updatedProduct) => {
-        if (!id) return { status: "error", error: "ID needed" }
-        const data = await fs.promises.readFile(pathCarts, 'utf-8')
-        let carts = JSON.parse(data)
-        const index = carts.findIndex(e => e.id === id)
-        carts[index] = updatedProduct.precio
-        carts = [...carts, carts[index]]
+    deleteProduct = async (cartId, productId) => {
+        if(!cartId) return {status:"error", message: "cartId field missing"}
+        if(!productId) return {status:"error", message: "productId field missing"}
+        if (fs.existsSync(pathCarts)) {
+            try {
+                //array carritos
+                const carts = JSON.parse(await fs.promises.readFile(pathCarts, 'utf-8'));
+                const idExistCart = carts.some( cart => cart.id === cartId );
+                if (!idExistCart) return {status:"error", message:"CartId do not exist"}
 
-        await fs.promises.writeFile(pathCarts, JSON.stringify(carts, null, 2))
-        return { status: "success", message: "Product updated" }
+                //verificar si existe el id del producto a eliminar
+                const cartFound = carts.find( cart => cart.id === cartId )
+                const idExistProd = cartFound.products.some( prod => prod === productId )
+
+                //Map del array Cart para acceder al cart respectivo(cartId) y pushear el productId
+                if (idExistProd && idExistCart) {
+                    const cartsUpdated = carts.map( cart => {
+                        if (cart.id === cartId) {
+                            cart.products = cart.products.filter( prod => prod !== productId )
+                            return cart
+
+                        } else return cart
+                    } )
+
+                    await fs.promises.writeFile(pathCarts, JSON.stringify(cartsUpdated, null, 2))
+
+                    return {status:"success", message:`Product '${productId}' deleted from cart ${cartId}`, payload: cartsUpdated}
+                    
+                } else return {status: "error", message: `productId: ${productId} do not exist in cart ${cartId}`}         
+                
+            } catch (error) {
+                return {status: error, message:"add product error"}
+            }   
+        } else { return {status: "empty", payload: []} }
     }
 }
 

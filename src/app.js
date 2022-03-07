@@ -1,19 +1,18 @@
 const express = require('express')
 const productsRouter = require('./routes/Products')
 const cartsRouter = require('./routes/Carts')
-
+/* SETTINGS */
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT || 8080
+
+/* USES */
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.static(__dirname+'/public'))
 
-/* PRODUCT MANAGER */
+/* ROUTES*/
 app.use('/api/products', productsRouter)
-app.listen(PORT, () => console.log('Listening'))
+app.use('/api/cart', cartsRouter)
 
-/* CART MANAGER */
-
-app.use('/api/carrito', cartsRouter)
-app.use('/api/carrito/:id', cartsRouter)
-app.use('/api/carrito/:id/products', cartsRouter)
+/* SERVER */
+const server = app.listen(PORT, () => console.log('Listening'))
