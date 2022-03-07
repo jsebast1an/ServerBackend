@@ -2,7 +2,19 @@ const fs = require('fs')
 
 const pathProducts = __dirname+'/../files/products'
 
-class productManager {
+class ProductManager {
+    getAll = async () => {
+        if (fs.existsSync(pathProducts)) {
+            try {
+                let data = await fs.promises.readFile(pathProducts, 'utf-8')
+                let products = JSON.parse(data);
+                return {status:"success", payload: products}
+
+            } catch (error) {
+                return {status: error}
+            }   
+        } else { return {status: "empty", payload: []} }
+    }
     getById = async (id) => {
         if(!id) return {status:"error", message: "Id field missing"}
         if (fs.existsSync(pathProducts)) {
@@ -59,6 +71,18 @@ class productManager {
             return {status:error}
         }
     }
+
+    updateProduct = async(id, updatedProduct) => {
+        if (!id) return { status: "error", error: "ID needed" }
+        const data = await fs.promises.readFile(pathProducts, 'utf-8')
+        let products = JSON.parse(data)
+        const index = products.findIndex(e => e.id === id)
+        products[index] = updatedProduct.precio
+        products = [...products, products[index]]
+
+        await fs.promises.writeFile(pathProducts, JSON.stringify(products, null, 2))
+        return { status: "success", message: "Product updated" }
+    }
 }
 
-module.exports = productManager;
+module.exports = ProductManager;
