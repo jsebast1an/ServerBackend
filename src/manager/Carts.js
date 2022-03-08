@@ -4,15 +4,19 @@ const pathCarts = __dirname+'/../files/carts'
 const pathProducts = __dirname+'/../files/products'
 
 class CartManager {
-    getById = async (id) => {
+    getProducts = async (id) => {
         if(!id) return {status:"error", message: "Id field missing"}
         if (fs.existsSync(pathCarts)) {
             try {
                 let data = await fs.promises.readFile(pathCarts, 'utf-8')
                 let carts = JSON.parse(data);
                 let cart = carts.find( cart => cart.id == id )
-                if(cart) return {status:"success", payload: cart}
-                else return {status: null, message: "cart not found"}
+                if(!cart) return {status:`Cart ${id} do not exist or not found`}
+                let products = cart.products
+                if(cart.length > 0) return {status:"success", payload: products}
+                else{
+                    return {status:"success", message: `Cart ${id} is empty`}
+                }
             } catch (error) {
                 return {status: error}
             }   

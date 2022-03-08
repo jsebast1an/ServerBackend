@@ -4,11 +4,11 @@ const CartManager = require('../manager/Carts')
 
 const cartService = new CartManager()
 
-/* 
-router.get('/:id', (req, res) => {
-    let id = req.params.id
-    cartService.getById(id).then(result => res.send(result) )
-}) */
+/* LISTAR PRODUCTOS DEL CARRITO */
+router.get('/:id/products', (req, res) => {
+    let id = parseInt(req.params.id) 
+    cartService.getProducts(id).then(result => res.send(result) )
+})
 
 /* CREAR CARRITO */
 router.post('/', (req, res) => {
@@ -44,12 +44,4 @@ router.delete('/:id', (req, res) => {
     cartService.deleteById(id).then(result => res.send(result) )
 })
 
-
-/* router.put('/:id', (req, res) => {
-    let param = req.params.id;
-    if (isNaN(param)) return res.status(400).send({ error: "Not a number" })
-    let number = parseInt(param);
-    cartService.updateProduct(number, req.body).then(result => res.send(result))
-})
- */
 module.exports = router

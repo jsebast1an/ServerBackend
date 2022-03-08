@@ -16,3 +16,7 @@ app.use('/api/cart', cartsRouter)
 
 /* SERVER */
 const server = app.listen(PORT, () => console.log('Listening'))
+
+app.use('*', (req, res) => {
+    res.send({error:"Not found", message:`ROUTE: ${req.url} METHOD: ${req.method} is not implemented yet`})
+})

@@ -74,13 +74,11 @@ class ProductManager {
 
     updateProduct = async(id, updatedProduct) => {
         if (!id) return { status: "error", error: "ID needed" }
-        const data = await fs.promises.readFile(pathProducts, 'utf-8')
-        let products = JSON.parse(data)
-        const index = products.findIndex(e => e.id === id)
-        products[index] = updatedProduct.precio
-        products = [...products, products[index]]
+        const data = await this.getAll()
+        const index = data.payload.findIndex(e => e.id === id)
+        data.payload[index] = {...data.payload[index], ...updatedProduct}
 
-        await fs.promises.writeFile(pathProducts, JSON.stringify(products, null, 2))
+        await fs.promises.writeFile(pathProducts, JSON.stringify(data.payload, null, 2))
         return { status: "success", message: "Product updated" }
     }
 }
