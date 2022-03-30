@@ -1,6 +1,6 @@
 const express = require('express')
-const productsRouter = require('./routes/Products')
-const cartsRouter = require('./routes/Carts')
+const productsFsRouter = require('./routes/ProductsFs')
+const cartsFsRouter = require('./routes/CartsFs')
 /* SETTINGS */
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.static(__dirname+'/public'))
 
 /* ROUTES*/
-app.use('/api/products', productsRouter)
-app.use('/api/cart', cartsRouter)
+app.use('/api/products', productsFsRouter)
+app.use('/api/cart', cartsFsRouter)
 
 /* SERVER */
 const server = app.listen(PORT, () => console.log('Listening'))

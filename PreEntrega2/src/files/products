@@ -22,5 +22,11 @@
     "price": 67,
     "thumbnail": "http://localhost:8080/img/1646616549868-large.png",
     "id": 4
+  },
+  {
+    "name": "T Shirt",
+    "price": 100,
+    "thumbnail": "http://localhost:8080/img/1648666649524-$.jpg",
+    "id": 5
   }
 ]

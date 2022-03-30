@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const ProductManager = require('../manager/Products')
+const ProductManager = require('../manager/ProductsFs')
 const adminMiddleware = require('../middlewares/Admin')
 const uploader = require('../services/Upload')
 
