@@ -2,12 +2,11 @@ const {Schema, model} = require('mongoose')
 
 const carstSchema = new Schema({
     products:{
-        type:String,
-        required:true,
+        type:Array
     },
     timestamp:{
-        type: new Date().getFullYear(),
-        required:true,
+        type: Number,
+        default:new Date().getFullYear()
     },
 })
 

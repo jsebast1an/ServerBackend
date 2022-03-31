@@ -5,15 +5,19 @@ const productsCollection = 'products'
 const productsSchema = new mongoose.Schema({
     name:{
         type:String,
-        required:true,
+        required:[true, 'Name is required']
     },
     price:{
         type:Number,
-        required:true,
+        required:[true, 'Name is required']
     },
     stock:{
         type:Number,
-        required:true,
+        required:[true, 'Name is required']
+    },
+    status:{
+        type: Boolean,
+        default: true,
     },
     thumbnail:String,
 })

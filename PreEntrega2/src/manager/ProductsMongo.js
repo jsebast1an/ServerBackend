@@ -7,13 +7,9 @@ const URL =  process.env.MONGODB
 
 mongoose.connect(URL,{useNewUrlParser:true,useUnifiedTopology:true})
 
-db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-	console.log('connected to mongoDB');
-});
 
 class ProductManagerMongo {
+
     getAll = async () => {
         try {
             let products = await productsServiceSchema.find({})
@@ -21,6 +17,15 @@ class ProductManagerMongo {
         } catch (error) {
             return {status: error}
         }   
+    }
+
+    getById = async(id) => {
+        try {
+            let product = await productsServiceSchema.findById(id)
+            return {status:"success", payload: product}
+        } catch (error) {
+            return {status: error, message:'imposible to find by ID product'}
+        }
     }
 
     add = async(product) => {
@@ -34,9 +39,9 @@ class ProductManagerMongo {
         }
     }
 
-    delete = async(product) => {
+    deleteById = async(id) => {
         try {
-            let data = await productsServiceSchema.deleteMany(product)
+            let data = await productsServiceSchema.deleteOne({ _id: id });
             return {status:"success", message:"product deleted", data}
         } catch (error) {
             return {status:error}
@@ -45,7 +50,7 @@ class ProductManagerMongo {
 
     updateProduct = async(id, updatedProduct) => {
         if (!id) return { status: "error", error: "ID needed" }
-        const newProduct = await productsServiceSchema.updateOne(id,{$set:updatedProduct})
+        const newProduct = await productsServiceSchema.findByIdAndUpdate(id, updatedProduct)
         return { status: "success", message: "Product updated", newProduct }
     }
 }

@@ -1,6 +1,6 @@
 const express = require('express')
-const productsFsRouter = require('./routes/ProductsFs')
-const cartsFsRouter = require('./routes/CartsFs')
+const productRouter = require('./routes/Products')
+const cartsRouter = require('./routes/Carts')
 require('./manager/ProductsMongo.js')
 
 /* SETTINGS */
@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.static(__dirname+'/public'))
 
 /* ROUTES*/
-app.use('/api/products', productsFsRouter)
-app.use('/api/cart', cartsFsRouter)
+app.use('/api/products', productRouter)
+app.use('/api/cart', cartsRouter)
 
 /* SERVER */
 const server = app.listen(PORT, () => console.log('Listening'))
