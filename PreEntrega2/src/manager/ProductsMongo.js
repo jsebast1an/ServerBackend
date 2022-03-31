@@ -1,9 +1,17 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
-const productsServiceSchema = require('../config/mongoModel.js')
+const productsServiceSchema = require('../config/productsModel.js')
 
-const URL =  'mongodb://127.0.0.1:27017/ecommerce'
+
+const URL =  process.env.MONGODB
 
 mongoose.connect(URL,{useNewUrlParser:true,useUnifiedTopology:true})
+
+db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+	console.log('connected to mongoDB');
+});
 
 class ProductManagerMongo {
     getAll = async () => {
@@ -37,8 +45,8 @@ class ProductManagerMongo {
 
     updateProduct = async(id, updatedProduct) => {
         if (!id) return { status: "error", error: "ID needed" }
-        const data = await database("products").where('id', id).update(updatedProduct)
-        return { status: "success", message: "Product updated", data }
+        const newProduct = await productsServiceSchema.updateOne(id,{$set:updatedProduct})
+        return { status: "success", message: "Product updated", newProduct }
     }
 }
 

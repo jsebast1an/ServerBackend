@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const ProductManager = require('../manager/ProductsFs')
+const ProductFsManager = require('../manager/ProductsFs')
 const adminMiddleware = require('../middlewares/Admin')
 const uploader = require('../services/Upload')
 
-const productService = new ProductManager()
+const productService = new ProductFsManager()
 
 /* TRAER TODOS LOS PRODUCTOS */
 router.get('/', (req, res) => {

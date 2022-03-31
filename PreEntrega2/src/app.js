@@ -1,6 +1,8 @@
 const express = require('express')
 const productsFsRouter = require('./routes/ProductsFs')
 const cartsFsRouter = require('./routes/CartsFs')
+require('./manager/ProductsMongo.js')
+
 /* SETTINGS */
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -20,3 +22,5 @@ const server = app.listen(PORT, () => console.log('Listening'))
 app.use('*', (req, res) => {
     res.send({error:"Not found", message:`ROUTE: ${req.url} METHOD: ${req.method} is not implemented yet`})
 })
+
+console.log(process.env.MONGODB);
