@@ -1,8 +1,11 @@
 const {Schema, model} = require('mongoose')
 
-const carstSchema = new Schema({
+
+
+const cartsSchema = new Schema({
     products:{
-        type:Array
+        type:Array,
+        default: []
     },
     timestamp:{
         type: Number,
@@ -10,6 +13,6 @@ const carstSchema = new Schema({
     },
 })
 
-const cartsServiceSchema = model('carts', carstSchema)
+const cartsServiceSchema = model('carts', cartsSchema)
 
 module.exports = cartsServiceSchema;

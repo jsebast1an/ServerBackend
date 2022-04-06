@@ -29,11 +29,11 @@ router.get('/:id', (req, res) => {
 
 
 /* UPDATE PRODUCTO */
-router.put('/:id', adminMiddleware,(req, res) => {
+router.put('/:id',(req, res) => {
     const id = req.params.id
-    const body = req.body;
+    const updateProduct = req.body;
     // if( id < 0 || isNaN(id) ) return res.status(400).send({ error:"error", message:"Product Id is incorrect" })
-    productDao.updateProduct(id, body).then(result => res.send(result))
+    productDao.updateProduct(id, updateProduct).then(result => res.send(result))
 })
 
 /* ELIMINAR PRODUCTO */

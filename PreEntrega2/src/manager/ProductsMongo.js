@@ -7,7 +7,6 @@ const URL =  process.env.MONGODB
 
 mongoose.connect(URL,{useNewUrlParser:true,useUnifiedTopology:true})
 
-
 class ProductManagerMongo {
 
     getAll = async () => {
