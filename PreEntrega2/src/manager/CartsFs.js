@@ -23,7 +23,7 @@ class CartManager {
         } else { return {status: "empty", payload: []} }
     }
 
-    add = async(cart) => {
+    addCart = async(cart) => {
         if(fs.existsSync(pathCarts)) {  //pregunta si esxiste el file
             try {
                 let data = await fs.promises.readFile(pathCarts, 'utf-8')
@@ -40,7 +40,7 @@ class CartManager {
             return {status:'added 1 cart'}
 
             } catch (error) {
-                return {status: error}
+                return {status: error, message:"not add"}
             }
         } else {
             try {
@@ -55,6 +55,7 @@ class CartManager {
     addProduct = async (cartId, productId) => {
         if(!cartId) return {status:"error", message: "cartId field missing"}
         if(!productId) return {status:"error", message: "productId field missing"}
+        
         if (fs.existsSync(pathCarts)) {
             try {
                 //array carritos
@@ -69,7 +70,7 @@ class CartManager {
                 //Map del array Cart para acceder al cart respectivo(cartId) y pushear el productId
                 if (idExistProd) {
                     const cartsUpdated = carts.map( cart => {
-                        if (cart.id === cartId) {
+                        if (cart.id === parseInt(cartId)) {
                             cart.products.push(productId)
                             currentCart = cart
                             return cart
@@ -108,18 +109,18 @@ class CartManager {
             try {
                 //array carritos
                 const carts = JSON.parse(await fs.promises.readFile(pathCarts, 'utf-8'));
-                const idExistCart = carts.some( cart => cart.id === cartId );
+                const idExistCart = carts.some( cart => cart.id === parseInt(cartId) );
                 if (!idExistCart) return {status:"error", message:"CartId do not exist"}
 
                 //verificar si existe el id del producto a eliminar
-                const cartFound = carts.find( cart => cart.id === cartId )
-                const idExistProd = cartFound.products.some( prod => prod === productId )
+                const cartFound = carts.find( cart => cart.id === parseInt(cartId) )
+                const idExistProd = cartFound.products.some( prod => prod === parseInt(productId) )
 
                 //Map del array Cart para acceder al cart respectivo(cartId) y pushear el productId
                 if (idExistProd && idExistCart) {
                     const cartsUpdated = carts.map( cart => {
                         if (cart.id === cartId) {
-                            cart.products = cart.products.filter( prod => prod !== productId )
+                            cart.products = cart.products.filter( prod => prod !== parseInt(productId) )
                             return cart
 
                         } else return cart
