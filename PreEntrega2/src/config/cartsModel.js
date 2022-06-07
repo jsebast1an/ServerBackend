@@ -1,8 +1,8 @@
-const {Schema, model} = require('mongoose')
+import mongoose from 'mongoose'
 
 
 
-const cartsSchema = new Schema({
+const cartsSchema = new mongoose.Schema({
     products:{
         type:Array,
         default: []
@@ -13,6 +13,6 @@ const cartsSchema = new Schema({
     },
 })
 
-const cartsServiceSchema = model('carts', cartsSchema)
+const cartsServiceSchema = mongoose.model('carts', cartsSchema)
 
-module.exports = cartsServiceSchema;
+export default cartsServiceSchema

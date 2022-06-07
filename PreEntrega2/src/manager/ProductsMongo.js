@@ -1,6 +1,7 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-const productsServiceSchema = require('../config/productsModel.js')
+import mongoose from 'mongoose'
+import productsServiceSchema from '../config/productsModel.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 
 const URL =  process.env.MONGODB
@@ -56,4 +57,4 @@ class ProductManagerMongo {
     }
 }
 
-module.exports = ProductManagerMongo;
+export default ProductManagerMongo;

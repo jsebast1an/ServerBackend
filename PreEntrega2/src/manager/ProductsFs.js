@@ -1,6 +1,6 @@
-const fs = require('fs')
+import fs from "fs"
 
-const pathProducts = __dirname+'/../files/products'
+const pathProducts = '../files/products'
 
 class ProductManager {
     getAll = async () => {
@@ -83,4 +83,4 @@ class ProductManager {
     }
 }
 
-module.exports = ProductManager;
+export default ProductManager;

@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
+import { productDao } from '../DAOs/index.js'
+import adminMiddleware from '../middlewares/Admin.js'
+import uploader from '../services/Upload.js'
 const router = express.Router()
-const { productDao } = require('../DAOs/index.js')
-const adminMiddleware = require('../middlewares/Admin')
-const uploader = require('../services/Upload')
 
 /* CREATE PRODUCTO */
 router.post('/', uploader.single('file'), (req, res) => {
@@ -42,4 +42,4 @@ router.delete('/:id', adminMiddleware, (req, res) => {
     productDao.deleteById(id).then(result => res.send(result) )
 })
 
-module.exports = router
+export default router

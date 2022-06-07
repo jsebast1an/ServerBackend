@@ -1,12 +1,12 @@
-const ProductManagerMongo = require('../manager/ProductsMongo');
-const ProductManager = require('../manager/ProductsFs');
-const CartManager = require('../manager/CartsFs');
-const CartManagerMongo = require('../manager/CartsMongo');
+import ProductManagerMongo from '../manager/ProductsMongo.js'
+import ProductManager from '../manager/ProductsFs.js'
+import CartManager from '../manager/CartsFs.js'
+import CartManagerMongo from '../manager/CartsMongo.js'
 
 const db = 'mongo';
 
-let productDao;
-let cartDao;
+export let productDao;
+export let cartDao;
 
 switch (db) {
     case 'mongo':
@@ -20,8 +20,3 @@ switch (db) {
     default:
         break;
 }
-
-module.exports = {
-    productDao,
-    cartDao
-};

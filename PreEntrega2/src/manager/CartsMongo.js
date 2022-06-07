@@ -1,6 +1,7 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-const cartsServiceSchema = require('../config/cartsModel.js')
+import mongoose from 'mongoose'
+import cartsServiceSchema from '../config/cartsModel.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 
 const URL =  process.env.MONGODB
@@ -80,4 +81,4 @@ class CartManagerMongo {
     }
 }
 
-module.exports = CartManagerMongo;
+export default CartManagerMongo;

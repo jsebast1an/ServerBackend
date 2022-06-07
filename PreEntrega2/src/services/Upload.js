@@ -1,4 +1,4 @@
-const multer = require('multer')
+import multer from "multer"
 
 let storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -11,4 +11,4 @@ let storage = multer.diskStorage({
 
 const uploader = multer({storage:storage})
 
-module.exports = uploader;
+export default uploader

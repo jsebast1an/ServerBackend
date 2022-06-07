@@ -1,7 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const { cartDao } = require('../DAOs/index.js')
+import express from 'express'
+import { cartDao } from '../DAOs/index.js'
 
+const router = express.Router()
 
 /* LISTAR PRODUCTOS DEL CARRITO */
 router.get('/:id/products', (req, res) => {
@@ -44,4 +44,4 @@ router.delete('/:id', (req, res) => {
     cartDao.deleteById(id).then(result => res.send(result) )
 })
 
-module.exports = router
+export default router

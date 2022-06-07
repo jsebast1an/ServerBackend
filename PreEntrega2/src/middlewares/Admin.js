@@ -1,4 +1,4 @@
-const fs = require('fs')
+
 
 function adminMiddleware(req, res, next) {
     let admin = true;
@@ -14,4 +14,4 @@ function adminMiddleware(req, res, next) {
 }
 
 
-module.exports = adminMiddleware;
+export default adminMiddleware;

@@ -1,7 +1,7 @@
-const fs = require('fs')
-
-const pathCarts = __dirname+'/../files/carts'
-const pathProducts = __dirname+'/../files/products'
+import fs from "fs"
+import { __dirname } from "../app.js";
+const pathCarts = '../files/carts'
+const pathProducts = '../files/products'
 
 class CartManager {
     getProducts = async (id) => {
@@ -139,4 +139,4 @@ class CartManager {
     }
 }
 
-module.exports = CartManager;
+export default CartManager;
