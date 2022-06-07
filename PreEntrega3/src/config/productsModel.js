@@ -9,11 +9,11 @@ const productsSchema = new mongoose.Schema({
     },
     price:{
         type:Number,
-        required:[true, 'Price is required']
+        required:[true, 'Name is required']
     },
     stock:{
         type:Number,
-        required:[true, 'Stock is required']
+        required:[true, 'Name is required']
     },
     status:{
         type: Boolean,

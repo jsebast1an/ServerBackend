@@ -39,19 +39,17 @@ class ProductManagerMongo {
     }
 
     deleteById = async(id) => {
-        const prodFound = await productsServiceSchema.findById(id)
-        if (prodFound) {
-            const data = await productsServiceSchema.deleteOne({ _id: id });
+        try {
+            let data = await productsServiceSchema.deleteOne({ _id: id });
             return {status:"success", message:"product deleted", data}
-        } else {
-            return {status:'error', message:'imposible to find product: '+ id}
+        } catch (error) {
+            return {status:error}
         }
     }
 
     updateProduct = async(id, updatedProduct) => {
         if (!id) return { status: "error", error: "ID needed" }
-        await productsServiceSchema.findByIdAndUpdate(id, updatedProduct)
-        const newProduct = await productsServiceSchema.findById(id)
+        const newProduct = await productsServiceSchema.findByIdAndUpdate(id, updatedProduct)
         return { status: "success", message: "Product updated", newProduct }
     }
 }
