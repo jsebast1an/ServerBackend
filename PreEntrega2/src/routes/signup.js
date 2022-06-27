@@ -1,13 +1,9 @@
-/* const express = require('express')
-const session = require('express-session')
-const MongoStore = require('connect-mongo')
-const path = require('path')
-const io = require('../app') */
 import express from "express"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import {io} from "../app.js"
 import { __dirname } from "../app.js"
+import passport from 'passport'
 import dotenv from "dotenv"
 dotenv.config()
 const router = express.Router()
@@ -30,7 +26,7 @@ router.get('/', (req, res) => {
     if(user) return res.redirect('/logged')
     res.sendFile('/public/html/signup.html', { root: __dirname })
 })
-router.post('/', /* passport.authenticate('signup', {failureRedirect:'/'}), */(req, res) => {
+router.post('/', passport.authenticate('signup', {failureRedirect:'/'}),(req, res) => {
     let user = req.body
     req.session.user = user
     io.on('connection', socket => {

@@ -5,11 +5,12 @@ import loggedRouter from "./routes/logged.js"
 import logoutRouter from "./routes/logout.js"
 import productsRouter from "./routes/Products.js"
 import cartsRouter from "./routes/Carts.js"
-/* import passport from "passport" */
+import passport from "passport"
 import { Server } from "socket.io"
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 export const __dirname = dirname(fileURLToPath(import.meta.url));
+import './middlewares/passport.js'
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 8080
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.static(__dirname+'/public'))
+app.use(passport.initialize())
 
 /* ROUTES*/
 app.use('/signup', signupRouter)
